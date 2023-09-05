@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div style="color:blue">
+        <form action="{{ url_for('predict_datapoint')}}" method="post">
+            <h2>Chennai House Price Prediction</h2>
+            <h3>AREA</h3><br><select name="AREA" id="AREA" required="required">
+                <option value="Adyar">Adyar</option>
+                <option value="Anna Nagar">Anna Nagar</option>
+                <option value="Chrompet">Chrompet</option>
+                <option value="KK Nagar">KK Nagar</option>
+                <option value="Karapakkam">Karapakkam</option>
+                <option value="T Nagar">T Nagar</option>
+                <option value="Velachery">Velachery</option>
+            </select>
+            <h3>What is Sqaurefoot Area ?</h3>
+            <div class="mb-3">
+                <input class="form-control" type="number" name="INT_SQFT"
+                    placeholder="Enter Sqaurefoot Area" min='500' max='2500' />
+            </div>
+            <h3>Number of Bedrooms</h3>
+            <div class="mb-3">
+                <input class="form-control" type="number" name="N_BEDROOM"
+                    placeholder="Enter No. of Bedroom" min='1' max='4' />
+            </div>
+            <h3>Number of Bathrooms</h3>
+            <div class="mb-3">
+                <input class="form-control" type="number" name="N_BATHROOM"
+                    placeholder="Enter No. of Bathrooms" min='1' max='2' />
+            </div>
+            <h3>Number of Rooms</h3>
+            <div class="mb-3">
+                <input class="form-control" type="number" name="N_ROOM"
+                    placeholder="Enter No. of rooms" min='2' max='6' />
+            </div>
+            <h3>SALE Condition</h3><br><select name="SALE_COND" id="cond" required="required">
+                <option value="AdjLand">AdjLand</option>
+                <option value="Family">Family</option>
+                <option value="Normal_Sale">Normal_Sale</option>
+                <option value="Partial">Partial</option>
+                <option value="AbNormal">AbNormal</option>
+             </select>
+            <h3>Parking Facility</h3><br><select name="PARK_FACIL" id="fuel" required="required">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <h3>Building Type</h3><br><select name="BUILDTYPE" id="build" required="required">
+                <option value="House">House</option>
+                <option value="OTHERS">OTHERS</option>
+                <option value="Commercial">Commercial</option>
+             </select>
+            <h3>Street type</h3><br><select name="STREET" id="street" required="required">
+                <option value="NoAccess">NoAccess</option>
+                <option value="Paved">Paved</option>
+                <option value="Gravel">Gravel</option>
+             </select>
+             <h3>Property Age</h3>
+             <div class="mb-3">
+                <input class="form-control" type="number" name="PROP_AGE"
+                    placeholder="Enter property age" min='0' max='55' />
+            </div>
+            <h3>Price Per Square Foot</h3>
+             <div class="mb-3">
+                <input class="form-control" type="number" name="PRICE_PER_SQ_FT"
+                    placeholder="PRICE_PER_SQ_FT" min='3000' max='20000' />
+            </div>
+             <h3>UTILITY</h3><br><select name="UTILITY" id="utility" required="required">
+                <option value="NoSewa">NoSewa</option>
+                <option value="ELO">ELO</option>
+                <option value="AllPub">Pub</option>
+             </select>
+            <br><br><button id="sub" type="submit ">Calculate the House Price</button>
+            <br>
+
+
+
+
+        </form>
+
+
+
+        <br><br><h3>THE  prediction is {{ results}} <h3>
+    </div>
+
+
+
+
+    <style>
+        body {
+            background-color: lightslategray;
+            text-align: center;
+            padding: 0px;
+        }
+
+        #research {
+            font-size: 18px;
+            width: 100px;
+            height: 23px;
+            top: 23px;
+        }
+
+        #box {
+            border-radius: 60px;
+            border-color: 45px;
+            border-style: solid;
+            font-family: cursive;
+            text-align: center;
+            background-color: rgb(168, 131, 61);
+            font-size: medium;
+            position: absolute;
+            width: 700px;
+            bottom: 9%;
+            height: 850px;
+            right: 30%;
+            padding: 0px;
+            margin: 0px;
+            font-size: 14px;
+        }
+
+        #fuel {
+            width: 83px;
+            height: 43px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 20px;
+        }
+
+        #fuel:hover {
+            background-color: coral;
+        }
+
+        #AREA {
+            width: 99px;
+            height: 43px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 18px;
+        }
+
+        #AREA:hover {
+            background-color: coral;
+        }
+
+        #cond {
+            width: 99px;
+            height: 43px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 18px;
+        }
+
+        #cond:hover {
+            background-color: coral;
+        }
+
+        #build {
+            width: 120px;
+            height: 43px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 18px;
+        }
+
+        #build:hover {
+            background-color: darkcyan;
+        }
+
+        #utility {
+            width: 120px;
+            height: 43px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 18px;
+        }
+
+        #utility:hover {
+            background-color: darkcyan;
+        }
+
+        #street {
+            width: 120px;
+            height: 43px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 18px;
+        }
+
+        #street:hover {
+            background-color: darkcyan;
+        }
+
+        #sub {
+            width: 120px;
+            height: 43px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 18px;
+        }
+
+        #sub:hover {
+            background-color: darkcyan;
+
+        }
+
+        #first {
+            border-radius: 14px;
+            height: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #second {
+            border-radius: 14px;
+            height: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #third {
+            border-radius: 14px;
+            height: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #fourth {
+            border-radius: 14px;
+            height: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #fifth {
+            border-radius: 14px;
+            height: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #sixth {
+            border-radius: 14px;
+            height: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #seventh {
+            border-radius: 14px;
+            height: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+    </style>
+</body>
+
+</html>
